@@ -1,0 +1,20 @@
+[package]
+name = "control-observe"
+description = "The estimator layer of the control stack: the obstacle velocity filter, the belief the on-manifold EKF and the joint/pose observers update, and the pose-motor observation. Pure estimation, no plant, no engine."
+version = "0.1.0"
+edition = "2021"
+# 1.87 is `is_multiple_of`, which the pga crate's parity checks call; the sibling crates state the
+# same floor.
+rust-version = "1.87"
+license = "MIT"
+
+[dependencies]
+pga = { path = "../pga" }
+control-math = { path = "../control-math" }
+control-model = { path = "../control-model" }
+
+[lints.clippy]
+# The one default lint this crate does not follow, and the allowance it had as part of `simu`: the
+# kernels index parallel arrays by a MODEL count (`n`, `nx`), not by a slice's length, so the index
+# is the maths the loop is written in.
+needless_range_loop = "allow"
