@@ -13,7 +13,7 @@
 // external edges are the two crates below it — `control-math` for the arithmetic, `control-model`
 // for the `PgaFk` motion model the pose observation reads — plus `pga`.
 //
-// GA_PID_AUDIT.md #14 keeps this layer OUT of the legged loop: an estimator is judged by an
+// This layer is kept OUT of the legged loop: an estimator is judged by an
 // observation bench, never by the walk (the biped's tests/layering.rs asserts it, and the arm's
 // src/bench/bench_avoid.rs is the layer's consumer). The two products (`../z1-arm`, `../g1-biped`)
 // consume this as a sibling path dependency (`{ path = "../control-observe" }`).

@@ -32,9 +32,9 @@ graph's own evidence:
   `state_belief` is shared, and only inside (`on_manifold_ekf`,
   `linear_joint_obs` and `pose_motor_obs` all read it);
 - its external edges are only the two crates below it, plus `pga`;
-- and it is deliberately OUT of the legged loop: `GA_PID_AUDIT.md` #14 keeps the
-  estimators out of the walk — a simulation with no measurement noise cannot
-  judge one — and the biped's `tests/layering.rs` asserts that no legged-path file
+- and it is deliberately OUT of the legged loop: a walk simulation has no
+  measurement noise, so it cannot judge an estimator — and the biped's
+  `tests/layering.rs` asserts that no legged-path file
   names one of them. The layer's consumer is the arm's observation bench,
   `../z1-arm/src/bench/bench_avoid.rs`.
 
