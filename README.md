@@ -1,8 +1,8 @@
 # control-observe — the estimator layer of the control stack
 
-A project of its own: `simu` (its consumer) depends on it as a sibling path
-dependency, so no estimator lives in `simu`'s tree and this crate can be built,
-tested and released alone. MIT-licensed (see `LICENSE`).
+A project of its own: `../z1-arm` and `../g1-biped` (its consumers) depend on it as
+sibling path dependencies, so no estimator lives in either tree and this crate can
+be built, tested and released alone. MIT-licensed (see `LICENSE`).
 
 Five modules, no plant and no engine:
 
@@ -34,9 +34,9 @@ graph's own evidence:
 - its external edges are only the two crates below it, plus `pga`;
 - and it is deliberately OUT of the legged loop: `GA_PID_AUDIT.md` #14 keeps the
   estimators out of the walk — a simulation with no measurement noise cannot
-  judge one — and `simu`'s `tests/layering.rs` asserts that no legged-path file
-  names one of them. The layer's consumer is the observation bench,
-  `simu`'s `bench/bench_avoid.rs`.
+  judge one — and the biped's `tests/layering.rs` asserts that no legged-path file
+  names one of them. The layer's consumer is the arm's observation bench,
+  `../z1-arm/src/bench/bench_avoid.rs`.
 
 ## Tests
 
