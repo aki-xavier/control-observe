@@ -1,9 +1,6 @@
-// linear_joint_obs.rs — the joint-encoder observation; estimator layer for the GA observation benchmarks (bench_avoid_est), pure math, no engine dependency.
-
 use crate::state_belief::StateBelief;
 use control_math::mat::Mat;
 
-/// LinearJointObs is the joint-encoder observation z = H x + noise, H selecting the position layer.
 #[derive(Clone, Debug)]
 pub struct LinearJointObs {
     pub n: usize,

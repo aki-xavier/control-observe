@@ -1,6 +1,3 @@
-// observer.rs — estimator-layer regression tests, engine-free: obstacle Kalman filter, on-manifold
-// EKF update, pose-motor observation consistency, deterministic noise generator.
-
 use control_math::mat::Mat;
 use control_math::rng::Mt19937;
 use control_model::pga_fk::PgaFk;

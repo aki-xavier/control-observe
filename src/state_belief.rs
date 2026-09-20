@@ -1,6 +1,3 @@
-// state_belief.rs — StateBelief, the joint-state belief (q, v) with the 2n x 2n covariance P;
-// estimator layer for the GA observation benchmarks (bench_avoid_est), pure math, no engine dependency.
-
 use control_math::mat::Mat;
 
 #[derive(Clone, Debug)]
@@ -29,7 +26,6 @@ impl StateBelief {
         }
     }
 
-    /// x returns the full joint state [q; v].
     pub fn x(&self) -> Vec<f64> {
         let mut x = vec![0.0; 2 * self.n];
         for i in 0..self.n {

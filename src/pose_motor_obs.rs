@@ -1,14 +1,10 @@
-// pose_motor_obs.rs — PoseMotorObs, the end-effector pose observation reported as a PGA motor.
-// Estimator layer for the GA observation benchmarks (bench_avoid_est); pure math, no engine.
-
 use crate::state_belief::StateBelief;
 use control_math::mat::Mat;
 use control_model::pga_fk::PgaFk;
 use control_model::pga_layer::pga_biv_to_axial;
 use pga::Multivector;
 
-/// residual r = -logComponents(log(M_hat^~ z)) in the bivector tangent space, and the central
-/// finite-difference Jacobian about the belief, with its lower blocks zero (the rate is not read).
+/// The Jacobian's lower blocks stay zero: a pose observation does not read the rate.
 #[derive(Clone, Debug)]
 pub struct PoseMotorObs {
     pub fk: PgaFk,

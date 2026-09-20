@@ -1,8 +1,5 @@
-// obs_vel_filter.rs — ObsVelFilter, the constant-velocity obstacle Kalman over [px py pz vx vy vz]; estimator layer for the GA observation benchmarks, pure math, no engine.
-
 use control_math::mat::Mat;
 
-/// ObsVelFilter is the constant-velocity Kalman over [px py pz vx vy vz] of an observed obstacle.
 #[derive(Clone, Debug)]
 pub struct ObsVelFilter {
     pub dt: f64,
@@ -25,7 +22,6 @@ impl ObsVelFilter {
         }
     }
 
-    /// step ingests a noisy position observation z (3x1) and returns the filtered position and velocity estimates.
     pub fn step(&mut self, z: &[f64]) -> (Vec<f64>, Vec<f64>) {
         if !self.init {
             self.x[..3].copy_from_slice(&z[..3]);
@@ -43,7 +39,6 @@ impl ObsVelFilter {
             &Mat::zeros(3, 3),
             &Mat::zeros(3, 3),
         );
-        // Q = q * [dt^3/3 I, dt^2/2 I; dt^2/2 I, dt I]
         let dt2 = dt * dt;
         let dt3 = dt2 * dt;
         let q11 = Mat::eye_scaled(self.q * dt3 / 3.0, 3);

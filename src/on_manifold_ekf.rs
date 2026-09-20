@@ -1,9 +1,6 @@
-// on_manifold_ekf.rs — OnManifoldEKF, the constant-velocity EKF over x = [q; qd]; estimator layer for the GA observation benchmarks, pure math, no engine dependency.
-
 use crate::state_belief::StateBelief;
 use control_math::mat::Mat;
 
-/// OnManifoldEKF is the constant-velocity EKF over x = [q; qd]: `predict` is the time update, `update` one measurement from (H, r, R).
 #[derive(Clone, Debug)]
 pub struct OnManifoldEKF {
     pub belief: StateBelief,
@@ -47,7 +44,7 @@ impl OnManifoldEKF {
             }
         }
         let s_inv = s.inv();
-        let k = hp.transposed().mul(&s_inv); // P H' S^-1 (2n x m)
+        let k = hp.transposed().mul(&s_inv);
         let dx = k.mul_vec(r_vec);
         for i in 0..n {
             self.belief.q[i] += dx[i];
