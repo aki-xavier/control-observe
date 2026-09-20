@@ -13,6 +13,12 @@ pga = { path = "../pga" }
 control-math = { path = "../control-math" }
 control-model = { path = "../control-model" }
 
+# A DEV-dependency only: the comment rules, which this project's own test holds it to
+# (tests/comment_why.rs). It reads text, has no dependencies of its own, and nothing in `src/` names it,
+# so the estimator layer is still the whole of what this crate links.
+[dev-dependencies]
+comment-why = { path = "../comment-why" }
+
 [lints.clippy]
 # The one default lint this crate does not follow, and the allowance it had as part of `simu`: the
 # kernels index parallel arrays by a MODEL count (`n`, `nx`), not by a slice's length, so the index

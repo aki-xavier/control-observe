@@ -43,3 +43,15 @@ track, the on-manifold EKF update, the joint and pose-motor observations against
 their analytic predictions, and the deterministic noise stream. It is
 engine-free, and it resolves the Z1 model through
 `control_model::urdf::urdf_path()` (control-model owns `models/`).
+
+`make test` is the suite and then the comment rules over the tree, so the lint is
+not a step anyone has to remember. The rules are `../comment-why`, a sibling
+project that reads text and asks the compiler for nothing — which is what lets
+the same rules also be an ordinary test here, `tests/comment_why.rs`, with no
+nightly and no plugin. They decide three shapes: process narration and filler, a
+comment line whose content words are all in the code below it, and a short doc
+comment that re-says the item's own name. This crate's sources carry few comment
+blocks, so the rules have little to say here; the target exists so the few stay
+honest. The rest is a reader's call, and `make comments` prints that crate's local
+approximation as advice it never fails on. The rules are a DEV-dependency: the
+estimator layer is still the whole of what this crate links.

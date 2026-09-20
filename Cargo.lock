@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "comment-why"
+version = "0.1.0"
+
+[[package]]
 name = "control-base"
 version = "0.1.0"
 dependencies = [
@@ -33,6 +37,7 @@ dependencies = [
 name = "control-observe"
 version = "0.1.0"
 dependencies = [
+ "comment-why",
  "control-math",
  "control-model",
  "pga",
