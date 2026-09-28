@@ -77,7 +77,6 @@ fn mt19937_deterministic() {
     assert!((std - 1.0).abs() < 0.05, "the generator's std is {std}");
 }
 
-/// The first call is a SEED, not an update (position := observation, velocity := 0); nothing else here touches a cold filter.
 #[test]
 fn the_first_observation_seeds_the_filter() {
     let mut f = ObsVelFilter::new(1e-3, 1e-4, 4e-6);

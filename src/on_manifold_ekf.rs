@@ -34,15 +34,8 @@ impl OnManifoldEKF {
 
     pub fn update(&mut self, h: &Mat, r_vec: &[f64], r_mat: &Mat) {
         let n = self.belief.n;
-        let m = r_vec.len();
         let hp = h.mul(&self.belief.p);
-        let s_tmp = hp.mul(&h.transposed());
-        let mut s = Mat::zeros(m, m);
-        for i in 0..m {
-            for j in 0..m {
-                s.set(i, j, s_tmp.at(i, j) + r_mat.at(i, j));
-            }
-        }
+        let s = hp.mul(&h.transposed()).add(r_mat);
         let s_inv = s.inv();
         let k = hp.transposed().mul(&s_inv);
         let dx = k.mul_vec(r_vec);

@@ -11,14 +11,11 @@ pub struct LinearJointObs {
 
 impl LinearJointObs {
     pub fn new(z: &[f64], n: usize, sigma: f64) -> LinearJointObs {
+        let mut h = Mat::zeros(n, 2 * n);
+        h.set_block(&Mat::eye(n), 0, 0);
         LinearJointObs {
             n,
-            h: Mat::from_blocks(
-                &Mat::eye(n),
-                &Mat::zeros(n, n),
-                &Mat::zeros(n, n),
-                &Mat::zeros(n, n),
-            ),
+            h,
             r_mat: Mat::eye_scaled(sigma * sigma, n),
             z: z.to_vec(),
         }

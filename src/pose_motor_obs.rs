@@ -4,7 +4,6 @@ use control_model::pga_fk::PgaFk;
 use control_model::pga_layer::pga_biv_to_axial;
 use pga::Multivector;
 
-/// The Jacobian's lower blocks stay zero: a pose observation does not read the rate.
 #[derive(Clone, Debug)]
 pub struct PoseMotorObs {
     pub fk: PgaFk,
@@ -12,6 +11,11 @@ pub struct PoseMotorObs {
     pub z: Multivector,
     pub r_mat: Mat,
     pub eps: f64,
+}
+
+fn log_components(b: Multivector) -> [f64; 6] {
+    let (w, v) = pga_biv_to_axial(b);
+    [w[0], w[1], w[2], v[0], v[1], v[2]]
 }
 
 impl PoseMotorObs {
@@ -24,14 +28,7 @@ impl PoseMotorObs {
             eps: eps_fd,
         }
     }
-}
 
-fn log_components(b: Multivector) -> [f64; 6] {
-    let (w, v) = pga_biv_to_axial(b);
-    [w[0], w[1], w[2], v[0], v[1], v[2]]
-}
-
-impl PoseMotorObs {
     fn residual_at(&self, q: &[f64]) -> [f64; 6] {
         let m_hat = self.fk.motor(q);
         let rel = m_hat.reverse().gp(self.z);
@@ -58,12 +55,9 @@ impl PoseMotorObs {
                 jq.set(k, i, -(rp[k] - rm[k]) / (2.0 * self.eps));
             }
         }
-        Mat::from_blocks(
-            &jq,
-            &Mat::zeros(6, self.n),
-            &Mat::zeros(6, self.n),
-            &Mat::zeros(6, self.n),
-        )
+        let mut j = Mat::zeros(6, 2 * self.n);
+        j.set_block(&jq, 0, 0);
+        j
     }
 
     pub fn r(&self) -> Mat {

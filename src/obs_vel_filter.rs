@@ -33,12 +33,8 @@ impl ObsVelFilter {
         for i in 0..3 {
             a.set(i, 3 + i, dt);
         }
-        let h = Mat::from_blocks(
-            &Mat::eye(3),
-            &Mat::zeros(3, 3),
-            &Mat::zeros(3, 3),
-            &Mat::zeros(3, 3),
-        );
+        let mut h = Mat::zeros(3, 6);
+        h.set_block(&Mat::eye(3), 0, 0);
         let dt2 = dt * dt;
         let dt3 = dt2 * dt;
         let q11 = Mat::eye_scaled(self.q * dt3 / 3.0, 3);
@@ -48,12 +44,8 @@ impl ObsVelFilter {
         let xp = a.mul_vec(&self.x);
         let pp = a.mul(&self.p).mul(&a.transposed()).add(&qm);
         let hppt = pp.mul(&h.transposed());
-        let s_tmp = h.mul(&pp).mul(&h.transposed());
-        let mut s = Mat::zeros(3, 3);
+        let mut s = h.mul(&pp).mul(&h.transposed());
         for i in 0..3 {
-            for j in 0..3 {
-                s.set(i, j, s_tmp.at(i, j));
-            }
             s.set(i, i, s.at(i, i) + self.r);
         }
         let s_inv = s.inv();
